@@ -1,0 +1,123 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" SnapsToDevicePixels="True" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+
+        <Style x:Key="TwCenMt">
+            <Setter Property="TextElement.FontFamily" Value="Resources/#tw-cen-mt-6" />
+        </Style>
+
+        <ControlTemplate x:Key="PasswordBoxControlTemplate1" TargetType="{x:Type PasswordBox}">
+            <Border x:Name="border" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ButtonControlTemplate1" TargetType="{x:Type Button}">
+            <Border x:Name="border" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+
+
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+
+
+    </Window.Resources>
+
+    <Grid Style="{DynamicResource TwCenMt}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="177*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="21*"/>
+            <RowDefinition Height="140*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="218*"/>
+            <ColumnDefinition Width="64*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="64*"/>
+            <ColumnDefinition Width="24*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="112*"/>
+            <ColumnDefinition Width="68*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush>
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="file:///C:/Users/Henri/Downloads/SISTEMOTECA/background2.jpg"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Grid.Background>
+
+        <TextBox x:Name="LoginBox" TextWrapping="Wrap" BorderBrush="White" BorderThickness="0"  UseLayoutRounding="False" VerticalContentAlignment="Center" Grid.Column="1" VerticalScrollBarVisibility="Disabled" FontSize="20" Grid.Row="2" MaxLines="1" MaxLength="11" Grid.ColumnSpan="3" TabIndex="1">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <PasswordBox x:Name="PasswordBox" BorderBrush="White" BorderThickness="0" UseLayoutRounding="False" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" Template="{DynamicResource PasswordBoxControlTemplate1}" FontSize="20" MaxLength="20" PasswordChar="●" Grid.ColumnSpan="3" TabIndex="2"/>
+
+        <Button x:Name="EnterButton" Content="ENTRAR" Grid.Column="2" Margin="0,0,1,0" Grid.Row="8" BorderThickness="0" Template="{DynamicResource ButtonControlTemplate1}" Background="#FF373C95" Foreground="White" FontSize="20" Cursor="Hand" Click="EnterButton_Click" IsDefault="True" IsTabStop="False"/>
+
+        <Button x:Name="RegisterButton" Content="Registre-se" Grid.Column="6" Grid.Row="4"
+                Template="{DynamicResource ButtonControlTemplate1}" BorderThickness="0" Background="#FF6699FF" Foreground="White" FontSize="20" Margin="0,0,6,0" Click="RegisterButton_Click" Cursor="Hand" IsTabStop="False"/>
+
+        <Button x:Name="ForgotButton" Content="Esqueceu a senha?" Grid.Column="6" Grid.Row="6" BorderThickness="0" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White" Background="#FF6699FF" FontSize="20" Margin="1,0,5,0" Cursor="Hand" Click="ForgotButton_Click" IsTabStop="False"/>
+
+        <Label x:Name="Label1" Content="Ainda não tem cadastro?" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" Foreground="White" FontSize="20" Margin="1,0" VerticalAlignment="Bottom" MinWidth="221" MinHeight="34"/>
+        <Label x:Name="Label2" Content="SENHA:" HorizontalAlignment="Left" Grid.Column="1" Margin="10,0,0,0" Grid.Row="4" Grid.RowSpan="2" Foreground="White" FontSize="20" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label3" Content="LOGIN:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Column="1" Foreground="White" FontSize="20" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Height="33" Width="72"/>
+
+        <Label x:Name="LoginInvalid" Content="Dados não estão corretos" Foreground="#FFFF0404" RenderTransformOrigin="0.419,0.655" MinWidth="145" VerticalContentAlignment="Center" Visibility="Hidden" MinHeight="24" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="7" Grid.ColumnSpan="3" Margin="0,0,0,15"/>
+
+    </Grid>
+
+
+
+
+</Window>
