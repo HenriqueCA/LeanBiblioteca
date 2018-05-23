@@ -33,22 +33,22 @@ namespace WpfApp1
             InitializeComponent();
 
         }
-
+        // Sair da tela de cadastro
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        // Mostrar os termos de cadastro
         private void Termos_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Textão");
         }
-
+        // Registrar-se. Caso tudo tenha sido preenchido, volta para a tela de login, caso não, mostra um aviso.
         private void Register_Click(object sender, RoutedEventArgs e)
         {
             if (password && name && cpf && email && pergunta && resposta && termos)
             {
-                
+
                 DataAccess db = new DataAccess();
 
                 db.InsertPerson(Cpf.Text, Senha.Password, Nome.Text, Telefone.Text, Email.Text, Curso.Text, Matricula.Text, Pergunta.Text, Resposta.Text);
@@ -59,10 +59,10 @@ namespace WpfApp1
             {
                 MessageBox.Show("Alguns dados são obrigatórios!");
             }
-       
+
 
         }
-
+        // Aviso da senha
         private void Senha_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (Senha.Password.Length < 6)
@@ -76,7 +76,7 @@ namespace WpfApp1
                 password = true;
             }
         }
-
+        // Aviso do nome
         private void Nome_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Nome.Text.Length < 1)
@@ -90,7 +90,7 @@ namespace WpfApp1
                 name = true;
             }
         }
-
+        // Aviso do cpf; deve ter 11 digitos.
         private void Cpf_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Cpf.Text.Length != 11)
@@ -105,7 +105,7 @@ namespace WpfApp1
             }
 
         }
-
+        // Email válido.
         private void Email_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -130,7 +130,7 @@ namespace WpfApp1
 
         }
 
-
+        // Pergunta secreta; maior que 5 caracteres
         private void Pergunta_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Pergunta.Text.Length < 5)
@@ -145,7 +145,7 @@ namespace WpfApp1
             }
 
         }
-
+        // Resposta maior que 1 caractere
         private void Resposta_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Resposta.Text.Length < 1)
@@ -159,12 +159,12 @@ namespace WpfApp1
                 resposta = true;
             }
         }
-
+        // Concorda-se com os termos
         private void CheckTermos_Checked(object sender, RoutedEventArgs e)
         {
             termos = true;
         }
-
+        // Discorda-se dos termos
         private void CheckTermos_Unchecked(object sender, RoutedEventArgs e)
         {
             termos = false;

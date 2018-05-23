@@ -148,7 +148,7 @@ namespace WpfApp1 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfApp1;component/window2.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/llsc;component/window2.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\Window2.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

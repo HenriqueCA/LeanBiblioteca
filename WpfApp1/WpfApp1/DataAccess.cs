@@ -18,7 +18,7 @@ namespace WpfApp1
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
-                var lista = connection.Query<User>("dbo.getByCpf @cpf", new { cpf = login }).ToList();
+                var lista = connection.Query<User>("dbo.getUser @cpf", new { cpf = login }).ToList();
 
                 var crypto = new SimpleCrypto.PBKDF2();
 
@@ -60,7 +60,7 @@ namespace WpfApp1
             {
 
                 User newUser = new User { cpf = Cpf, senha = encryptPass, senhasalt = encryptSalt, nome = Nome, telefone = Telefone, email = Email, curso = Curso, matricula = Matricula, pergunta = Pergunta, resposta = encryptAnswer, respostasalt = respsalt };
-                var lista = connection.Query<User>("dbo.getByCpf @cpf", new { cpf = Cpf }).ToList();
+                var lista = connection.Query<User>("dbo.getUser @cpf", new { cpf = Cpf }).ToList();
 
                 if (lista.Count == 0)
                 {
@@ -73,17 +73,13 @@ namespace WpfApp1
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
-                var crypto = new SimpleCrypto.PBKDF2();
+                var crypto = new PBKDF2();
                 var encryptPass = crypto.Compute(user.senha);
                 var encryptSalt = crypto.Salt;
-                var encryptAnswer = crypto.Compute(user.resposta);
-                var respsalt = crypto.Salt;
                 user.senha = encryptPass;
-                user.resposta = encryptAnswer;
-                user.senhasalt = encryptSalt;
-                user.respostasalt = respsalt;
+                user.senhasalt = encryptSalt;                
 
-                connection.Execute("dbo.updatePassword @Cpf, @Senha, @SenhaSalt, @Resposta, @Respostasalt", user);
+                connection.Execute("dbo.updatePassword @Cpf, @Senha, @SenhaSalt" , user);
 
             }
         }
@@ -93,14 +89,9 @@ namespace WpfApp1
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
                 var lista = connection.Query<User>("dbo.getUser @Cpf", new { Cpf = cpf }).ToList();
-                try
-                {
-                    return lista[0];
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+              
+                return lista[0];
+
             }
         }
 
@@ -108,7 +99,7 @@ namespace WpfApp1
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
-                connection.Execute("dbo.logRegister @nome, @email, @cpf, @logintime, @logouttime", new { LogTime.nome, LogTime.email, LogTime.cpf, LogTime.logintime, LogTime.logouttime });
+                connection.Execute("dbo.logRegister @nome, @curso, @matricula, @cpf, @logintime, @logouttime", new { LogTime.nome, LogTime.curso, LogTime.matricula, LogTime.cpf, LogTime.logintime, LogTime.logouttime });
             }
         }
     }

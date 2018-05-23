@@ -15,6 +15,7 @@ namespace WpfApp1
 
     public partial class App : Application
     {
+        // Ao sair do windows, manda todas as informações do usuário para o servidor.
         private void App_SessionEnding(object sender, SessionEndingCancelEventArgs e)
         {
             DataAccess db = new DataAccess();

@@ -50,7 +50,7 @@ namespace WpfApp1
             TaskManagerStop();
 
         }
-
+        // Ao abrir o taskmanager, deixa-o escondido.
         private void TaskManagerStop()
         {
             Process p = new Process();
@@ -73,7 +73,7 @@ namespace WpfApp1
             p.StartInfo.FileName = "taskmgr.exe";
 
         }
-
+        // Permite o uso do taskmanager
         private void TaskManagerBack()
         {
 
@@ -87,13 +87,13 @@ namespace WpfApp1
 
         }
 
-
+        // Não permite o uso das teclas alt, ctrl, shift e tambéms as teclas windows
         private void _interceptor_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
 
             if (e.Alt || e.Control || e.Shift)
             {
-                //e.SuppressKeyPress = true;
+                e.SuppressKeyPress = true;
             }
             if (e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin)
             {
@@ -101,15 +101,17 @@ namespace WpfApp1
             }
 
         }
-
+        // Ir para a tela de registro
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             Window1 regWindow = new Window1();
 
+            LoginInvalid.Visibility = Visibility.Hidden;
+
             regWindow.Show();
 
         }
-
+        // Logar-se, jogando fora os hooks
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             String login = LoginBox.Text;
@@ -128,7 +130,7 @@ namespace WpfApp1
                 _interceptor.StopCapturing();
 
                 LogedUser(login, db);
-               
+
 
 
             }
@@ -141,18 +143,22 @@ namespace WpfApp1
             PasswordBox.Password = "";
         }
 
+        // Seta os dados do usuário que fez login
         private void LogedUser(String login, DataAccess db)
         {
             User logedUser = db.GetUserName(login);
             LogTime.nome = logedUser.nome;
-            LogTime.email = logedUser.email;
+            LogTime.curso = logedUser.curso;
+            LogTime.matricula = logedUser.matricula;
             LogTime.cpf = logedUser.cpf;
             LogTime.logintime = DateTime.Now.ToString();
         }
-
+        // Ir para a tela de mudar a senha
         private void ForgotButton_Click(object sender, RoutedEventArgs e)
         {
             Window2 newPasswordWindow = new Window2();
+
+            LoginInvalid.Visibility = Visibility.Hidden;
 
             newPasswordWindow.Show();
         }

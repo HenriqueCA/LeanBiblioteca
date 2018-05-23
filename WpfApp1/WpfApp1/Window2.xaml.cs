@@ -29,6 +29,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
+        // Procura o cpf dado
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             DataAccess db = new DataAccess();
@@ -38,12 +39,11 @@ namespace WpfApp1
             if (user.Count > 0)
             {
                 SecretQuestion.Content = user[0].pergunta;
-                Answer.IsEnabled = true;
-                Answer.Visibility = Visibility.Visible;
-                AnswerButton.IsEnabled = true;
-                AnswerButton.Visibility = Visibility.Visible;
                 user[0].cpf = CpfSearch.Text;
-                CpfNotRegistered.Visibility = Visibility.Hidden;
+
+                ChangeInterface(Answer, AnswerButton, CpfNotRegistered);
+
+                SearchButton.IsEnabled = false;
                 SearchButton.IsDefault = false;
                 AnswerButton.IsDefault = true;
 
@@ -57,6 +57,16 @@ namespace WpfApp1
 
         }
 
+        // Mudar a interface
+        private void ChangeInterface(UIElement box, UIElement button, UIElement labelIncorrect)
+        {
+            box.IsEnabled = true;
+            box.Visibility = Visibility.Visible;
+            button.IsEnabled = true;
+            button.Visibility = Visibility.Visible;
+            labelIncorrect.Visibility = Visibility.Hidden;
+        }
+        // Ao clicar no butao de resposta, checa se a resposta está valida
         private void AnswerButton_Click(object sender, RoutedEventArgs e)
         {
             var crypto = new SimpleCrypto.PBKDF2();
@@ -67,12 +77,10 @@ namespace WpfApp1
             {
 
                 NovaSenhaLabel.Visibility = Visibility.Visible;
-                NewPassword.IsEnabled = true;
-                NewPassword.Visibility = Visibility.Visible;
-                ChangeButton.IsEnabled = true;
-                ChangeButton.Visibility = Visibility.Visible;
-                user[0].resposta = resposta;
-                IncorrectAnswer.Visibility = Visibility.Hidden;
+
+                ChangeInterface(NewPassword, ChangeButton, IncorrectAnswer);
+
+                AnswerButton.IsEnabled = false;
                 AnswerButton.IsDefault = false;
                 ChangeButton.IsDefault = true;
             }
@@ -83,12 +91,12 @@ namespace WpfApp1
             }
 
         }
-
+        // Voltar para a tela de login
         private void ExitNewPasswordButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        // Mudar a senha
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
             if (NewPassword.Password.Length >= 6)
@@ -103,7 +111,7 @@ namespace WpfApp1
             }
 
         }
-
+        // Aviso se a senha é valida
         private void NewPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (NewPassword.Password.Length < 6)

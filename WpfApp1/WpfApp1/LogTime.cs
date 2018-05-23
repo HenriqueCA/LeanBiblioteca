@@ -10,7 +10,9 @@ namespace WpfApp1
     {
         public static String nome { get; set; }
 
-        public static String email { get; set; }
+        public static String curso { get; set; }
+
+        public static String matricula { get; set; }
 
         public static String cpf { get; set; }
 
