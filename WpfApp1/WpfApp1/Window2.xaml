@@ -98,7 +98,7 @@
         <Grid.Background>
             <ImageBrush>
                 <ImageBrush.ImageSource>
-                    <BitmapImage UriSource="file:///C:/Users/Henri/Downloads/SISTEMOTECA/background.jpg"/>
+                    <BitmapImage UriSource="Images/background.jpg"/>
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Grid.Background>

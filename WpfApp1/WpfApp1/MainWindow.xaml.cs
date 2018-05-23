@@ -87,15 +87,11 @@ namespace WpfApp1
 
         }
 
-        // Não permite o uso das teclas alt, ctrl, shift e tambéms as teclas windows
+        // Não permite o uso das teclas alt, ctrl e também as teclas windows
         private void _interceptor_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
 
-            if (e.Alt || e.Control || e.Shift)
-            {
-                e.SuppressKeyPress = true;
-            }
-            if (e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin)
+            if (e.Alt || e.Control || e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin || e.KeyCode == System.Windows.Forms.Keys.RMenu)
             {
                 e.SuppressKeyPress = true;
             }

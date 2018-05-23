@@ -22,3 +22,8 @@ C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.g.reso
 C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.Properties.Resources.resources
 C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.exe
 C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.pdb
+C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\bin\Debug\llsc.exe.manifest
+C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\bin\Debug\llsc.application
+C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.TrustInfo.xml
+C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.exe.manifest
+C:\Users\Henri\source\repos\LeanBiblioteca\WpfApp1\WpfApp1\obj\Debug\llsc.application
