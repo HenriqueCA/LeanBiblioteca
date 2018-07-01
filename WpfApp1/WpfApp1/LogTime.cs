@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+    /// <summary>
+    /// Classe que armazena o tempo de login de um determinado usuario.
+    /// So e requisitado algumas informacoes de um usuario, como o nome, curso, matricula e cpf.
+    /// Salva o tempo que entrou e o tempo que saiu.
+    /// </summary>
     public static class LogTime
     {
         public static String nome { get; set; }
