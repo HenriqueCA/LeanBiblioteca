@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
@@ -137,6 +140,52 @@ namespace WpfApp1
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
                 connection.Execute("dbo.logRegister @nome, @curso, @matricula, @cpf, @logintime, @logouttime", new { LogTime.nome, LogTime.curso, LogTime.matricula, LogTime.cpf, LogTime.logintime, LogTime.logouttime });
+            }
+        }
+        /// <summary>
+        /// Manda um email para leanbiblioteca@gmail.com cola2010. Ainda a ser alterado. Utilizar Dapper.
+        /// </summary>
+        public void SendMail()
+        {
+            string body = "";
+            String ConnStr = "Data Source=den1.mssql2.gear.host;Initial Catalog=leanbiblioteca;User ID=leanbiblioteca;Password='Ei0Zs?dr~5X9';";
+            String SQL = "SELECT nome, curso, matricula, cpf, logintime, logouttime FROM LogTable ";
+            SqlDataAdapter TitlesAdpt = new SqlDataAdapter(SQL, ConnStr);
+            DataSet Titles = new DataSet();
+            // No need to open or close the connection
+            //   since the SqlDataAdapter will do this automatically.
+            TitlesAdpt.Fill(Titles);
+            body = "<table>";
+            foreach (DataRow Title in Titles.Tables[0].Rows)
+            {
+                body += "<tr>";
+                body += "<td>" + Title[0] + "</td>";
+                body += "<td>" + String.Format("{0:c}", Title[1])
+                   + "</td>";
+                body += "</tr>";
+            }
+            body += "</table>";
+
+            var fromAddress = new MailAddress("leanbiblioteca@gmail.com", "From Name");
+            var toAddress = new MailAddress("leanbiblioteca@gmail.com", "To Name");
+            const string fromPassword = "cola2010";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = "teste",
+                Body = body
+            })
+            {
+                smtp.Send(message);
             }
         }
     }
