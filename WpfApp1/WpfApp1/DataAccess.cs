@@ -147,7 +147,12 @@ namespace WpfApp1
         /// </summary>
         public void SendMail()
         {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.cnnval("DataBase"))){
+
+            // Parte para ser alterada. Utilizar procedure + ajeitar tabela.
             string body = "";
+            var lista = connection.Query<auxLogTime>("dbo.getAllLog @Nome, @Curso, @Matricula, @Cpf, @Logintime, @Logouttime", new { Nome = nome, } ).ToList()
             String ConnStr = "Data Source=den1.mssql2.gear.host;Initial Catalog=leanbiblioteca;User ID=leanbiblioteca;Password='Ei0Zs?dr~5X9';";
             String SQL = "SELECT nome, curso, matricula, cpf, logintime, logouttime FROM LogTable ";
             SqlDataAdapter TitlesAdpt = new SqlDataAdapter(SQL, ConnStr);
@@ -166,6 +171,7 @@ namespace WpfApp1
             }
             body += "</table>";
 
+            // Procedimento para enviar o email. 
             var fromAddress = new MailAddress("leanbiblioteca@gmail.com", "From Name");
             var toAddress = new MailAddress("leanbiblioteca@gmail.com", "To Name");
             const string fromPassword = "cola2010";
@@ -181,11 +187,12 @@ namespace WpfApp1
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = "teste",
+                Subject = "Log de Usuários do dia " + DateTime.Now.toString(),
                 Body = body
             })
             {
                 smtp.Send(message);
+            }
             }
         }
     }
