@@ -44,6 +44,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            DataAccess da = new DataAccess();
+            da.SendMail();
             _interceptor = new KeyboardInterceptor();
             _interceptor.KeyDown += _interceptor_KeyDown;
             _interceptor.StartCapturing();
@@ -91,10 +93,10 @@ namespace WpfApp1
         private void _interceptor_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
 
-            if (e.Alt || e.Control || e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin || e.KeyCode == System.Windows.Forms.Keys.RMenu)
-            {
-                e.SuppressKeyPress = true;
-            }
+            //if (e.Alt || e.Control || e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin || e.KeyCode == System.Windows.Forms.Keys.RMenu)
+            //{
+             //   e.SuppressKeyPress = true;
+            //}
 
         }
         // Ir para a tela de registro

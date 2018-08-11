@@ -148,30 +148,47 @@ namespace WpfApp1
         public void SendMail()
         {
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.cnnval("DataBase"))){
 
             // Parte para ser alterada. Utilizar procedure + ajeitar tabela.
-            string body = "";
-            var lista = connection.Query<auxLogTime>("dbo.getAllLog @Nome, @Curso, @Matricula, @Cpf, @Logintime, @Logouttime", new { Nome = nome, } ).ToList()
+            string body;
+
+            //var lista = connection.Query<String>("dbo.getAllLog").ToList();
+
             String ConnStr = "Data Source=den1.mssql2.gear.host;Initial Catalog=leanbiblioteca;User ID=leanbiblioteca;Password='Ei0Zs?dr~5X9';";
             String SQL = "SELECT nome, curso, matricula, cpf, logintime, logouttime FROM LogTable ";
+
             SqlDataAdapter TitlesAdpt = new SqlDataAdapter(SQL, ConnStr);
+
             DataSet Titles = new DataSet();
             // No need to open or close the connection
             //   since the SqlDataAdapter will do this automatically.
             TitlesAdpt.Fill(Titles);
-            body = "<table>";
+
+            body = "<table style = '1px solid black'>";
+            body += "<tr>";
+            body += "<th style = 'border: 1px solid black'>" + "Nome" + "</ th >";
+            body += "<th style = 'border: 1px solid black'>" + "Curso" + "</ th >";
+            body += "<th style = 'border: 1px solid black'>" + "Matricula" + "</ th >";
+            body += "<th style = 'border: 1px solid black'>" + "Cpf" + "</ th >";
+            body += "<th style = 'border: 1px solid black'>" + "Login Time" + "</ th >";
+            body += "<th style = 'border: 1px solid black'>" + "Logout Time" + "</ th >";
+            body += "</tr>";
+
             foreach (DataRow Title in Titles.Tables[0].Rows)
             {
                 body += "<tr>";
-                body += "<td>" + Title[0] + "</td>";
-                body += "<td>" + String.Format("{0:c}", Title[1])
+                body += "<td style = 'border: 1px solid black'>" + Title[0] + "</td>";
+                for (int i = 1; i < 6; i++)
+                {
+                    body += "<td style = 'border: 1px solid black'>" + String.Format("{0:c}", Title[i])
                    + "</td>";
+
+                }
                 body += "</tr>";
             }
             body += "</table>";
 
-            // Procedimento para enviar o email. 
+            // Procedimento para enviar o email.      
             var fromAddress = new MailAddress("leanbiblioteca@gmail.com", "From Name");
             var toAddress = new MailAddress("leanbiblioteca@gmail.com", "To Name");
             const string fromPassword = "cola2010";
@@ -187,13 +204,15 @@ namespace WpfApp1
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = "Log de Usuários do dia " + DateTime.Now.toString(),
+
+                Subject = "Log de Usuários do dia " + DateTime.Now.ToString(),
                 Body = body
             })
             {
+                message.IsBodyHtml = true;
                 smtp.Send(message);
-            }
             }
         }
     }
 }
+
