@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="llsc.exe" size="10508256">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="llsc.exe" size="10508768">
       <assemblyIdentity name="llsc" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0j7AUqN4SKFvzycIAvl/2xE14/EZN1n/6pyOFOFQFng=</dsig:DigestValue>
+        <dsig:DigestValue>AaYdcnGcH5+3g2jfBG4p36EUzEIWgNB+FVtGa9eo4Yw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

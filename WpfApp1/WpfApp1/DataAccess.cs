@@ -125,6 +125,7 @@ namespace WpfApp1
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
             {
+
                 var lista = connection.Query<User>("dbo.getUser @Cpf", new { Cpf = cpf }).ToList();
 
                 return lista[0];
@@ -143,25 +144,20 @@ namespace WpfApp1
             }
         }
         /// <summary>
-        /// Manda um email para leanbiblioteca@gmail.com cola2010. Ainda a ser alterado. Utilizar Dapper.
+        /// Manda um email para leanbiblioteca@gmail.com cola2010. Ainda a ser alterado.
         /// </summary>
         public void SendMail()
         {
-
-
-            // Parte para ser alterada. Utilizar procedure + ajeitar tabela.
             string body;
 
             //var lista = connection.Query<String>("dbo.getAllLog").ToList();
 
-            String ConnStr = "Data Source=den1.mssql2.gear.host;Initial Catalog=leanbiblioteca;User ID=leanbiblioteca;Password='Ei0Zs?dr~5X9';";
-            String SQL = "SELECT nome, curso, matricula, cpf, logintime, logouttime FROM LogTable ";
+            string ConnStr = Helper.Cnnval("DataBase");
+            //Alterar pra um procedure ( SQL = "dbo.getLogInfo" ).
+            string SQL = "SELECT nome, curso, matricula, cpf, logintime, logouttime FROM LogTable ";
 
             SqlDataAdapter TitlesAdpt = new SqlDataAdapter(SQL, ConnStr);
-
             DataSet Titles = new DataSet();
-            // No need to open or close the connection
-            //   since the SqlDataAdapter will do this automatically.
             TitlesAdpt.Fill(Titles);
 
             body = "<table style = '1px solid black'>";
@@ -177,15 +173,14 @@ namespace WpfApp1
             foreach (DataRow Title in Titles.Tables[0].Rows)
             {
                 body += "<tr>";
-                body += "<td style = 'border: 1px solid black'>" + Title[0] + "</td>";
-                for (int i = 1; i < 6; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     body += "<td style = 'border: 1px solid black'>" + String.Format("{0:c}", Title[i])
                    + "</td>";
-
                 }
                 body += "</tr>";
             }
+
             body += "</table>";
 
             // Procedimento para enviar o email.      
@@ -211,8 +206,22 @@ namespace WpfApp1
             {
                 message.IsBodyHtml = true;
                 smtp.Send(message);
+                clearLogTable();
             }
+        }
+        /// <summary>
+        /// Limpa toda a LogTable do banco de dados.
+        /// </summary>
+        private void clearLogTable()
+        {
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.Cnnval("DataBase")))
+            {
+                // connection.Execute("dbo.clearLogTable");
+            }
+
         }
     }
 }
+
 
